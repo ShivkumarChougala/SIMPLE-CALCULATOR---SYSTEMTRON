@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+
+</head>
+ <style>
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        background-color: #f5f5f5;
+    }
+
+    .calculator {
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        width: 320px;
+        padding: 10px;
+        overflow: hidden;
+    }
+
+    .result {
+        width: 100%;
+        height: 100px;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-bottom: 2px solid #ddd;
+        box-sizing: border-box;
+        text-align: right;
+    }
+
+    .equal {
+        width: 100%;
+        height: 60px;
+        grid-column: span 2; 
+        text-align: center; 
+        background-color: #3e8e41;
+        color: #fff;
+    }
+
+    #calculation,
+    #output {
+        display: block;
+        font-size: 18px;
+        margin-bottom: 5px;
+        
+    }
+
+    #output {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .buttons {
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: repeat(4, 1fr);
+    
+    }
+
+    button {
+        padding: 10px;
+        width: 100%;
+        border-radius: 6px;
+        height: 60px;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        background: #000;
+        background-color: #fff;
+        transition: background-color 0.3s;
+    }
+    button:hover {
+        background-color: #3e8e41}
+
+    button:active {
+        background-color: #e0e0e0;
+        transform: translateY(4px);
+    }
+
+ </style>
+<body>
+    <div class="calculator">
+        <div class="result" id="result">
+            <span id="calculation"></span>
+            <span id="output"></span>
+        </div>
+        <div class="buttons">
+            <button  onclick="clearDisplay()">AC</button>
+            <button  onclick="del()">DEL</button>
+            <button  onclick="Display('/')">/</button>
+            <button  onclick="Display('*')">*</button>
+            
+            <button onclick="Display('7')">7</button>
+            <button onclick="Display('8')">8</button>
+            <button onclick="Display('9')">9</button>
+            <button  onclick="Display('+')">+</button>
+
+            <button onclick="Display('4')">4</button>
+            <button onclick="Display('5')">5</button>
+            <button onclick="Display('6')">6</button>
+            <button  onclick="Display('-')">-</button>
+
+            <button onclick="Display('1')">1</button>
+            <button onclick="Display('2')">2</button>
+            <button onclick="Display('3')">3</button>
+            <button  onclick="Display('.')">.</button>
+
+            <button onclick="Display('00')">00</button>
+            <button onclick="Display('0')">0</button>        
+            <button class="equal" onclick="Result()">=</button>
+        </div>
+    </div>
+
+<script>
+
+
+    let calculation = document.getElementById('calculation');
+    let output = document.getElementById('output');
+
+function Display(value) {
+    calculation.innerText += value; //It is typically used to update and display the user's input
+}
+
+function clearDisplay() {   
+    //  resetting the calculator display.
+    calculation.innerText = '';
+    output.innerText = '';
+}
+
+function Result() {
+    try {
+        let result = eval(calculation.innerText);
+        output.innerText = result;
+    // it uses eval to evaluate the expression obtained from the calculation element and displays the result in the output element
+    } catch (error) {
+        output.innerText = 'Error';
+    }
+    // if an error occurs during evaluation, such as a syntax error, it displays 'Error'.
+    
+}
+
+function del() {
+    let currentCalculation = calculation.innerText;
+    let lastChar = currentCalculation.slice(-1);
+
+    // Check if the last character is an operator or a digit5
+    if (/[\+\-\*\/\%]/.test(lastChar)) {
+            // If it's an operator, remove the entire operator
+        calculation.innerText = currentCalculation.slice(0, -1);
+    } else if (/\d|\./.test(lastChar)) {
+            // If it's a digit or a dot, remove the last character
+        calculation.innerText = currentCalculation.slice(0, -1);
+    }
+    
+}
+
+</script>
+</body>
+</html>
